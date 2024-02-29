@@ -1,4 +1,4 @@
-# Object Detection using YOLOv5, YOLOv8, and Faster R-CNN
+# Object Detection using YOLOv8, YOLOv5, and Faster R-CNN
 This repository contains scripts for performing object detection using the YOLOv5, YOLOv8, and Faster R-CNN models. The scripts are capable of detecting objects in real-time from live video streams captured by a webcam or an external camera.
 
 ## YOLOv8 Object Detection
