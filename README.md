@@ -22,6 +22,10 @@ pip install opencv-python numpy Pillow ultralytics
 
 2. Download the YOLOv8 model file `yolov8n.pt` from the Ultralytics repository.
 
+3. Usage
+```python
+Webcam Object Detection YOLOv8 (cpu).py
+```
 By default, the script will use the built-in webcam (camera index 0) for object detection. Press 'q' to exit the program.
 
 Parameters
@@ -53,7 +57,10 @@ pip install opencv-python numpy torch torchvision
 import torch
 model = torch.hub.load('ultralytics/yolov5', 'yolov5s', pretrained=True)
 ```
-
+3. Usage
+```python
+Webcam Object Detection YOLOv5 (cpu).py
+```
 By default, the script will use the built-in webcam (camera index 0) for object detection. Press 'q' to exit the program.
 
 Parameters
