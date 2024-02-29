@@ -26,7 +26,7 @@ from ultralytics import YOLO
 model = YOLO('yolov8n.pt')
 ```
 
-4. Usage
+3. Usage
 ```bash
 python Webcam Object Detection YOLOv8 (cpu).py
 ```
