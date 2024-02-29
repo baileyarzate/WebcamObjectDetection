@@ -20,9 +20,13 @@ The `Webcam Object Detection YOLOv8 (cpu).py` script utilizes the YOLOv8 model f
 pip install opencv-python numpy Pillow ultralytics
 ```
 
-2. Download the YOLOv8 model file `yolov8n.pt` from the Ultralytics repository.
+2. Install the YOLO v8 model:
+```python
+from ultralytics import YOLO
+model = YOLO('yolov8n.pt')
+```
 
-3. Usage
+4. Usage
 ```bash
 python Webcam Object Detection YOLOv8 (cpu).py
 ```
