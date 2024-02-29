@@ -93,4 +93,4 @@ This project utilizes the Ultralytics YOLO library for YOLOv8 object detection a
 YOLO (You Only Look Once) and Faster R-CNN are state-of-the-art, real-time object detection systems that identify multiple objects in images or video streams.
 
 ## License
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the LICENSE.md file for details.
