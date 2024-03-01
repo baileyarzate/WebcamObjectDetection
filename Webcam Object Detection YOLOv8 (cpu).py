@@ -58,18 +58,13 @@ def object_detection_yolo8(camera = 0, threshold = 0.5, font_size = 18):
             print("Error retrieving frame. Aborting.")
             break
     
-        results = model(frame) # Perform object detection with YOLOv8
+        results = model(frame, conf = threshold) # Perform object detection with YOLOv8
         # Extract bounding boxes, labels, and scores
         boxes = results[0].boxes.xyxy[:, :4].cpu().numpy()
         labels = [results[0].names[idx] for idx in results[0].boxes.data[:, 5].cpu().numpy().astype(int)]
         scores = results[0].boxes.conf[:, ].cpu().numpy()
     
-        # Filter out detections with score below threshold
-        mask = scores >= threshold
-        boxes = boxes[mask]
-        scores = [scores[i] for i in range(len(scores)) if mask[i]]
-        labels = [labels[i] for i in range(len(labels)) if mask[i]]
-        labels_with_scores = [f'{labels[i]} - {scores[i]:.2f}' for i in range(len(labels)) if mask[i]]
+        labels_with_scores = [f'{labels[i]} - {scores[i]:.2f}' for i in range(len(labels))]# if mask[i]]
     
         # Convert image to PIL format
         image_pil = Image.fromarray(frame)
