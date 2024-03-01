@@ -84,7 +84,7 @@ def object_pose_yolo8(camera = 0, threshold = 0.5, font_size = 18):
         if not ret:
             print("Error retrieving frame. Aborting.")
             break
-        result = model.predict(frame, conf=0.5)[0]
+        result = model.predict(frame, conf=threshold)[0]
         image_pil = Image.fromarray(frame)
         output = draw_lines(image_pil, result, shape)
         #Display the processed frame
