@@ -89,7 +89,7 @@ def object_pose_yolo8(camera = 0, threshold = 0.5, font_size = 18):
         output = draw_lines(image_pil, result, shape)
         #Display the processed frame
         
-        cv2.imshow('object detection using YOLO', output)
+        cv2.imshow('Pose using YOLO', output)
         frame_counter += 1
     
         if cv2.waitKey(1) & 0xFF == ord('q'):
