@@ -58,10 +58,10 @@ def object_segmentation_yolo8(model, camera = 0, threshold = 0.5, font_size = 18
             texts = []
             result = model(frame)[0]
             output, texts = classify_image(image_pil, texts, result = result)
-            cv2.imshow('object detection using YOLO', output)
+            cv2.imshow('object classification using YOLO', output)
         else:
             output, texts = classify_image(image_pil, texts = texts)
-            cv2.imshow('object detection using YOLO', output)
+            cv2.imshow('object classification using YOLO', output)
             
         frame_counter += 1
         if cv2.waitKey(1) & 0xFF == ord('q'):
