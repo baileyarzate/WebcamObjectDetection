@@ -71,14 +71,16 @@ def object_detection_yolo8(model = None, camera = 0, threshold = 0.5, font_size 
         image_pil = Image.fromarray(frame)
     
         # Draw bounding boxes on image
-        output_frame = draw_bounding_boxes(image_pil, 
+        try:
+            output = draw_bounding_boxes(image_pil, 
                                             boxes, 
                                             labels_with_scores, 
                                             ["red" if label=="person" else "green" for label in labels],
                                             font_size = font_size)
+        except: output = np.array(image_pil)
     
         #Display the processed frame
-        cv2.imshow('object detection using YOLO', output_frame)
+        cv2.imshow('object detection using YOLO', output)
         frame_counter += 1
     
         if cv2.waitKey(1) & 0xFF == ord('q'):
