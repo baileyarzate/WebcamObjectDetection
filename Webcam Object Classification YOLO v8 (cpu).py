@@ -23,7 +23,7 @@ def classify_image(image, texts, result = None):
         
     return np.array(image), texts
 
-def object_segmentation_yolo8(model, camera = 0, threshold = 0.5, font_size = 18):
+def object_classification_yolo8(model, camera = 0, threshold = 0.5, font_size = 18):
     '''
     The purpose of this function is to connect to a webcam or external camera
     such as a GoPro and do object segmentation using the YOLO v8 model. 
@@ -56,12 +56,12 @@ def object_segmentation_yolo8(model, camera = 0, threshold = 0.5, font_size = 18
         image_pil = Image.fromarray(frame)
         if frame_counter % 200 == 0:
             texts = []
-            result = model(frame)[0]
+            result = model(frame, conf = threshold)[0]
             output, texts = classify_image(image_pil, texts, result = result)
-            cv2.imshow('object classification using YOLO', output)
+            cv2.imshow('object detection using YOLO', output)
         else:
             output, texts = classify_image(image_pil, texts = texts)
-            cv2.imshow('object classification using YOLO', output)
+            cv2.imshow('object detection using YOLO', output)
             
         frame_counter += 1
         if cv2.waitKey(1) & 0xFF == ord('q'):
@@ -69,12 +69,18 @@ def object_segmentation_yolo8(model, camera = 0, threshold = 0.5, font_size = 18
     cap.release()
     cv2.destroyAllWindows()
 
-#model sizes:
-#   - Nano: yolov8n
-#   - Small: yolov8s
-#   - Medium: yolov8m
-#   - Large: yolov8l
-#   - XLarge: yolov8x
+#models:
+#   - Nano: yolov8n-cls.pt
+#   - Small: yolov8s-cls.pt
+#   - Medium: yolov8m-cls.pt
+#   - Large: yolov8l-cls.pt
+#   - XLarge: yolov8x-cls.pt
 
-model = YOLO('yolov8m-cls.pt')
-object_segmentation_yolo8(model = model)    
+model = {'Nano': 'yolov8n-cls.pt',
+          'Small': 'yolov8s-cls.pt',
+          'Medium': 'yolov8m-cls.pt',
+          'Large': 'yolov8l-cls.pt',
+          'XLarge': 'yolov8x-cls.pt'}
+
+model = YOLO(model['Nano'])
+object_classification_yolo8(model = model)    
