@@ -53,7 +53,7 @@ def draw_lines(image, result, shape, width = 2):
     return np.array(image)
 
 
-def object_pose_yolo8(camera = 0, threshold = 0.5, font_size = 18):
+def object_pose_yolo8(model = None, camera = 0, threshold = 0.5, font_size = 18):
     '''
     The purpose of this function is to connect to a webcam or external camera
     such as a GoPro and do object segmentation using the YOLO v8 model. 
@@ -66,7 +66,8 @@ def object_pose_yolo8(camera = 0, threshold = 0.5, font_size = 18):
     
     '''
     # Load YOLOv8 model
-    model = YOLO('yolov8n-pose.pt')
+    if model is None:
+        model = YOLO('yolov8n-pose.pt')
     
     # Open video capture
     cap = cv2.VideoCapture(0)
@@ -86,15 +87,24 @@ def object_pose_yolo8(camera = 0, threshold = 0.5, font_size = 18):
             break
         result = model.predict(frame, conf=threshold)[0]
         image_pil = Image.fromarray(frame)
-        output = draw_lines(image_pil, result, shape)
+        try:
+            output = draw_lines(image_pil, result, shape)
+        except: output = np.array(image_pil)
         #Display the processed frame
         
-        cv2.imshow('Pose using YOLO', output)
+        cv2.imshow('object detection using YOLO', output)
         frame_counter += 1
     
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
     cap.release()
     cv2.destroyAllWindows()
+    
+model = {'Nano': 'yolov8n-pose.pt',
+          'Small': 'yolov8s-pose.pt',
+          'Medium': 'yolov8m-pose.pt',
+          'Large': 'yolov8l-pose.pt',
+          'XLarge': 'yolov8x-pose.pt'}
 
-object_pose_yolo8()    
+model = YOLO(model['Nano'])
+object_pose_yolo8(model)    
