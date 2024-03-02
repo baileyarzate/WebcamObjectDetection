@@ -23,7 +23,7 @@ def classify_image(image, texts, result = None):
         
     return np.array(image), texts
 
-def object_classification_yolo8(model, camera = 0, threshold = 0.5, font_size = 18):
+def object_classification_yolo8(model = None, camera = 0, threshold = 0.5, font_size = 18):
     '''
     The purpose of this function is to connect to a webcam or external camera
     such as a GoPro and do object segmentation using the YOLO v8 model. 
@@ -35,6 +35,9 @@ def object_classification_yolo8(model, camera = 0, threshold = 0.5, font_size = 
         The default is 0.
     
     '''
+    if model is None:
+        model = YOLO('yolov8n-cls.pt')
+    
     cap = cv2.VideoCapture(camera)
     
     if not cap.isOpened():
@@ -57,10 +60,12 @@ def object_classification_yolo8(model, camera = 0, threshold = 0.5, font_size = 
         if frame_counter % 200 == 0:
             texts = []
             result = model(frame, conf = threshold)[0]
-            output, texts = classify_image(image_pil, texts, result = result)
+            try: output, texts = classify_image(image_pil, texts, result = result)
+            except: output = np.array(image_pil)
             cv2.imshow('object detection using YOLO', output)
         else:
-            output, texts = classify_image(image_pil, texts = texts)
+            try: output, texts = classify_image(image_pil, texts = texts)
+            except: output = np.array(image_pil)
             cv2.imshow('object detection using YOLO', output)
             
         frame_counter += 1
