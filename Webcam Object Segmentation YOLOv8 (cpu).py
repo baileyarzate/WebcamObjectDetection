@@ -12,7 +12,7 @@ def draw_outline(image, result, width = 2):
                      fill = (0,255,0,50))
     return np.array(image)
 
-def object_segmentation_yolo8(model, camera = 0, threshold = 0.5, font_size = 18):
+def object_segmentation_yolo8(model = None, camera = 0, threshold = 0.5, font_size = 18):
     '''
     The purpose of this function is to connect to a webcam or external camera
     such as a GoPro and do object segmentation using the YOLO v8 model. 
@@ -26,7 +26,9 @@ def object_segmentation_yolo8(model, camera = 0, threshold = 0.5, font_size = 18
     '''
     # Open video capture
     cap = cv2.VideoCapture(camera)
-    
+    if model is None:
+        model = YOLO('yolov8n-seg.pt')
+        
     if not cap.isOpened():
         print("Cannot open camera. Aborting.")
         exit()
@@ -43,7 +45,8 @@ def object_segmentation_yolo8(model, camera = 0, threshold = 0.5, font_size = 18
     
         result = model(frame)[0]
         image_pil = Image.fromarray(frame)
-        output = draw_outline(image_pil, result)
+        try: output = draw_outline(image_pil, result)
+        except: output = np.array(image_pil)
         #Display the processed frame
         
         cv2.imshow('object segmentation using YOLO', output)
