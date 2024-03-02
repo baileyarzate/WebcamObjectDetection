@@ -70,7 +70,7 @@ def object_pose_yolo8(model = None, camera = 0, threshold = 0.5, font_size = 18)
         model = YOLO('yolov8n-pose.pt')
     
     # Open video capture
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture(camera)
     
     if not cap.isOpened():
         print("Cannot open camera. Aborting.")
