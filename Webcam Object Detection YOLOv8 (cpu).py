@@ -19,7 +19,7 @@ def draw_bounding_boxes(image, boxes, labels, colors, width=1, font_size=12, fil
         
     return np.array(image)
 
-def object_detection_yolo8(camera = 0, threshold = 0.5, font_size = 18):
+def object_detection_yolo8(model = None, camera = 0, threshold = 0.5, font_size = 18):
     '''
     The purpose of this function is to connect to a webcam or external camera
     such as a GoPro and do object recognition using the YOLO v8 model. 
@@ -40,7 +40,8 @@ def object_detection_yolo8(camera = 0, threshold = 0.5, font_size = 18):
 
     '''
     # Load YOLOv8 model
-    model = YOLO('yolov8n.pt')
+    if model is None:
+        model = YOLO('yolov8n.pt')
     # Open video capture
     cap = cv2.VideoCapture(camera)
     
@@ -84,6 +85,13 @@ def object_detection_yolo8(camera = 0, threshold = 0.5, font_size = 18):
             break
     cap.release()
     cv2.destroyAllWindows()
-    
-object_detection_yolo8()    
+
+model = {'Nano': 'yolov8n.pt',
+          'Small': 'yolov8s.pt',
+          'Medium': 'yolov8m.pt',
+          'Large': 'yolov8l.pt',
+          'XLarge': 'yolov8x.pt'}
+
+model = YOLO(model['Nano'])
+object_detection_yolo8(model = model)    
     
